@@ -1,0 +1,62 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../vendor/awcodes/filament-quick-create/resources/**/*.blade.php';
+@source "../../../../vendor/relaticle/flowforge/resources/views/**/*.blade.php";
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/* === Modernisation de la scrollbar – apparition discrète au survol === */
+
+/* Cache le thumb par défaut et prépare la transition */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(237, 238, 240, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 1px;
+    transition: background 0.3s ease;
+}
+
+/* Révélation au survol de la zone de contenu */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(224, 224, 225, 0.5);
+}
+
+/* Version sombre */
+.dark ::-webkit-scrollbar-track {
+    background: rgba(1, 16, 35, 0.6);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: transparent;
+    transition: background 0.3s ease;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(41, 50, 60, 0.6);
+}
+
+/* Pour le survol du thumb lui‑même (quand il est visible) */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(204, 206, 210, 0.7) !important;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 42, 54, 0.7) !important;
+}
+
+.os-theme-custom.os-scrollbar {
+    --os-size: 8px;
+    --os-padding-perpendicular: 2px;
+    --os-handle-bg: rgba(16, 185, 129, 0.4); /* émeraude semi-transparent */
+    --os-handle-bg-hover: rgba(16, 185, 129, 0.6);
+    --os-handle-bg-active: rgba(4, 120, 87, 0.8);
+    --os-handle-border-radius: 4px;
+    --os-animation-duration: 0.4s;
+}
