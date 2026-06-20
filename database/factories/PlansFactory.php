@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 /**
  * @extends Factory<Plan>
  */
-class PlansFactory extends Factory
+class PlanFactory extends Factory
 {
     protected $model = Plan::class;
 

@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class ReviewController extends Controller
 {
     public function productsReviewsIndex(Produit $produit)

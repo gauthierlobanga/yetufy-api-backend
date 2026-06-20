@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Shop;
 use App\Http\Controllers\Controller;
 use App\Models\Promotion;
 
-
 class PromotionController extends Controller
 {
     /**

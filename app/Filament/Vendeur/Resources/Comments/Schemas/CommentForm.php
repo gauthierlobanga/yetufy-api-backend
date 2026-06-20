@@ -3,8 +3,6 @@
 namespace App\Filament\Vendeur\Resources\Comments\Schemas;
 
 use App\Models\Post;
-use App\Models\Tenant;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -14,7 +12,6 @@ use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Facades\Auth;
 
 class CommentForm
 {

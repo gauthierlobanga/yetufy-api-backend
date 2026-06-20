@@ -801,6 +801,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('user_tenant');
         Schema::dropIfExists('adresses');
         Schema::dropIfExists('clients');
         Schema::dropIfExists('produit_categories');

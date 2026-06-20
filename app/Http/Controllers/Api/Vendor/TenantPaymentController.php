@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Paiement;
 use Illuminate\Http\Request;
 
-
 class TenantPaymentController extends Controller
 {
     /**

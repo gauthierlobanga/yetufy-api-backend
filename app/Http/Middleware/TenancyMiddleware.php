@@ -12,17 +12,15 @@ class TenancyMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
         $host = $request->getHost();
-        
+
         // Check if it's a central domain (no tenant)
         $centralDomains = config('tenancy.central_domains', ['localhost', '127.0.0.1']);
-        
+
         if (in_array($host, $centralDomains)) {
             return $next($request);
         }
@@ -33,18 +31,18 @@ class TenancyMiddleware
         })->first();
 
         // If not found, try by subdomain
-        if (!$tenant) {
+        if (! $tenant) {
             $subdomain = explode('.', $host)[0];
             $tenant = Tenant::where('slug', $subdomain)->first();
         }
 
         // If still no tenant, redirect to central domain
-        if (!$tenant) {
+        if (! $tenant) {
             return redirect()->away(config('app.url'));
         }
 
         // Check tenant status
-        if (!$tenant->is_active) {
+        if (! $tenant->is_active) {
             return redirect()->away(config('app.url'))
                 ->with('error', 'Tenant is inactive');
         }

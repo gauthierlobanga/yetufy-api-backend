@@ -62,7 +62,7 @@ class VendeurForm
                             ->dehydrated(fn ($state) => filled($state)) // ne pas écraser avec une chaîne vide
                             ->required(fn (string $operation): bool => $operation === 'create'),
 
-                         Select::make('statut')
+                        Select::make('statut')
                             ->options(Tenant::getStatuts())
                             ->preload()
                             ->searchable()
@@ -125,7 +125,7 @@ class VendeurForm
                             ->visible(fn (callable $get) => in_array($get('statut'), ['actif', 'suspendu']))
                             ->helperText('Optionnel. La boutique sera automatiquement suspendue après cette date.'),
 
-                         Toggle::make('is_active')
+                        Toggle::make('is_active')
                             ->label('Compte actif')
                             ->default(false)
                             ->live()

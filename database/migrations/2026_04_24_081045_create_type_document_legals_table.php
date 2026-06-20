@@ -27,10 +27,10 @@ return new class extends Migration
         // Table pivot : documents du tenant
         Schema::create('tenant_documents_legaux', function (Blueprint $table) {
             $table->uuid('id')->primary();
-        $table->string('tenant_id');
-        $table->foreign('tenant_id')
-            ->references('id')->on('tenants')
-            ->onDelete('cascade');
+            $table->string('tenant_id');
+            $table->foreign('tenant_id')
+                ->references('id')->on('tenants')
+                ->onDelete('cascade');
             $table->foreignUuid('type_document_id')->constrained('type_documents_legaux')->cascadeOnDelete();
             $table->string('numero_document')->nullable();
             $table->date('date_delivrance')->nullable();

@@ -23,16 +23,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 // use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
-use Laravel\Sanctum\HasApiTokens;
 
 // use Stancl\Tenancy\Contracts\SyncMaster;
 // use Stancl\Tenancy\Database\Concerns\ResourceSyncing;
-
 
 /**
  * @mixin HasRoles
@@ -159,7 +158,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasMedia,
             'tenant_id',
         )
             ->using(UserTenantPivot::class)
-            ->withPivot('id','is_owner')
+            ->withPivot('id', 'is_owner')
             ->withTimestamps();
     }
 

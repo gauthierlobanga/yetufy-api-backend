@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Api\Settings\ProfileController;
 use App\Http\Controllers\Api\Settings\SecurityController;
 use Illuminate\Support\Facades\Route;

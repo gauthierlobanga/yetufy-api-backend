@@ -13,7 +13,7 @@ class IdentifyTenantForApi
         // 1. Sous-domaine
         $host = $request->getHost();
         $centralDomains = config('tenancy.central_domains', []);
-        if (!in_array($host, $centralDomains)) {
+        if (! in_array($host, $centralDomains)) {
             $slug = explode('.', $host)[0];
             $tenant = Tenant::where('slug', $slug)->firstOrFail();
             tenancy()->initialize($tenant);

@@ -212,14 +212,14 @@ class ProduitCategorySeeder extends Seeder
                                 'parente_id' => $catNiveau2->id,
                                 'est_active' => $faker->boolean(90),
                                 'is_featured' => $faker->boolean(20),
-                            'show_in_menu' => $faker->boolean(80),
-                            'order' => $faker->numberBetween(0, 100),
-                            'color' => $faker->hexColor(),
-                            'seo_title' => $nomNiveau3.' '.$nomGroupe.' - Meilleurs prix',
-                            'seo_description' => $faker->text(150),
-                            'seo_keywords' => [strtolower($nomNiveau3)],
-                            'metadata' => ['niveau' => 3],
-                        ]);
+                                'show_in_menu' => $faker->boolean(80),
+                                'order' => $faker->numberBetween(0, 100),
+                                'color' => $faker->hexColor(),
+                                'seo_title' => $nomNiveau3.' '.$nomGroupe.' - Meilleurs prix',
+                                'seo_description' => $faker->text(150),
+                                'seo_keywords' => [strtolower($nomNiveau3)],
+                                'metadata' => ['niveau' => 3],
+                            ]);
                     }
                 } else {
                     // Catégorie simple de niveau 2

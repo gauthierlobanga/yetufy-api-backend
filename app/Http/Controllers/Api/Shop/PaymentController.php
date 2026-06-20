@@ -7,7 +7,6 @@ use App\Models\Commande;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
-
 class PaymentController extends Controller
 {
     public function paymentPay(Commande $commande)

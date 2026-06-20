@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\Main\PaymentController;
 use App\Http\Controllers\Api\Auth\TenantSsoLoginController;
+use App\Http\Controllers\Api\Main\PaymentController;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

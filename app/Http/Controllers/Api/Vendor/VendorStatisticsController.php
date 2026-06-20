@@ -18,7 +18,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-
 /**
  * Contrôleur de statistiques avancées pour le tableau de bord du vendeur.
  *

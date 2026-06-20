@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Api\Shop;
 
-use App\Http\Controllers\Api\Shop\ProductController;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
-
 
 class CategoryController extends Controller
 {

@@ -12,7 +12,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
-
 class HomeController extends Controller
 {
     public function homeIndex(Request $request)

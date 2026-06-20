@@ -627,7 +627,7 @@ class Post extends Model implements HasMedia
         return $query->orderBy('published_at', 'desc');
     }
 
-    public function scopeBetweenDates(Builder $query,mixed $start, mixed $end)
+    public function scopeBetweenDates(Builder $query, mixed $start, mixed $end)
     {
         return $query->whereBetween('published_at', [$start, $end]);
     }

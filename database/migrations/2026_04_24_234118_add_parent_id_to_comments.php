@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-           $table->foreignUuid('parent_id')->nullable()->constrained('comments')->nullOnDelete();
+            $table->foreignUuid('parent_id')->nullable()->constrained('comments')->nullOnDelete();
             $table->index('parent_id');
         });
     }

@@ -9,7 +9,6 @@ use App\Models\Paiement;
 use App\Models\Produit;
 use Illuminate\Support\Facades\Cache;
 
-
 class PageController extends Controller
 {
     public function pageContact()

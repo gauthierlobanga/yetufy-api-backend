@@ -3,7 +3,6 @@
 namespace App\Http\Responses\Auth;
 
 use Illuminate\Http\JsonResponse;
-
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 
 class RegisterResponse implements RegisterResponseContract

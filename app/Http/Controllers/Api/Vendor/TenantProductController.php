@@ -7,7 +7,6 @@ use App\Models\ProductCategory;
 use App\Models\Produit;
 use App\Services\TenantPropsService;
 
-
 class TenantProductController extends Controller
 {
     public function index(TenantPropsService $tenantProps)

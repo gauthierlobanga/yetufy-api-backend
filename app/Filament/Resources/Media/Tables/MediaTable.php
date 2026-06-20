@@ -36,8 +36,10 @@ class MediaTable
                             if (function_exists('tenancy') && tenancy()->initialized) {
                                 $tenant = tenancy()->tenant;
                                 $path = 'tenants/'.$tenant->id.'/'.$record->getPathRelativeToRoot();
+
                                 return '/storage/tenant-'.$tenant->slug.'/'.$path;
                             }
+
                             return $record->getUrl();
                         }
 

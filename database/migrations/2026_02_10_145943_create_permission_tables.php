@@ -62,7 +62,7 @@ return new class extends Migration
                 $table->uuid($columnNames['team_foreign_key'])->nullable();
                 $table->index($columnNames['team_foreign_key'], 'model_has_permissions_team_foreign_key_index');
 
-                $table->primary([/*$columnNames['team_foreign_key']*/ $pivotPermission, $columnNames['model_morph_key'], 'model_type'],
+                $table->primary([/* $columnNames['team_foreign_key'] */ $pivotPermission, $columnNames['model_morph_key'], 'model_type'],
                     'model_has_permissions_permission_model_type_primary');
             } else {
                 $table->primary([$pivotPermission, $columnNames['model_morph_key'], 'model_type'],
@@ -86,7 +86,7 @@ return new class extends Migration
                 $table->uuid($columnNames['team_foreign_key'])->nullable();
                 $table->index($columnNames['team_foreign_key'], 'model_has_roles_team_foreign_key_index');
 
-                $table->primary( [/*$columnNames['team_foreign_key'],*/ $pivotRole, $columnNames['model_morph_key'], 'model_type'],
+                $table->primary([/* $columnNames['team_foreign_key'], */ $pivotRole, $columnNames['model_morph_key'], 'model_type'],
                     'model_has_roles_role_model_type_primary');
             } else {
                 $table->primary([$pivotRole, $columnNames['model_morph_key'], 'model_type'],

@@ -9,8 +9,10 @@
     "sail": false,
     "skills": [
         "ai-sdk-development",
+        "fortify-development",
         "laravel-best-practices",
         "pulse-development",
+        "socialite-development",
         "pest-testing",
         "echo-development",
         "tailwindcss-development"

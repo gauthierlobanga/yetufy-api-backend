@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use App\Models\Produit;
 use App\Models\Tenant;
-
 use Nnjeim\World\Models\Country;
 
 class HeroCentralController extends Controller
@@ -56,7 +55,6 @@ class HeroCentralController extends Controller
             'stats' => $stats,
             'testimonials' => $testimonials,
         ]);
-
 
     }
 }

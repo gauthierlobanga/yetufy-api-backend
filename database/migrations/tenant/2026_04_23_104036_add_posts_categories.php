@@ -6,18 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::table('user_tenant', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+
+        Schema::table('posts_categories', function (Blueprint $table) {
+            $table->foreignUuid('parent_id')->nullable()->constrained('posts_categories')->nullOnDelete();
+            $table->index('parent_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void {}
 };

@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-
 class PaymentController extends Controller
 {
     public function __construct(
@@ -117,7 +116,7 @@ class PaymentController extends Controller
                 ]);
             }
 
-            return response()->json(['error'=>'Le paiement n\'a pas abouti. Veuillez réessayer.']);
+            return response()->json(['error' => 'Le paiement n\'a pas abouti. Veuillez réessayer.']);
         } catch (\Exception $e) {
             Log::error('Erreur vérification paiement', [
                 'session_id' => $sessionId,

@@ -57,8 +57,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'payment.session' => EnsurePaymentSession::class,
-            'guest.tenant'    => RedirectIfAuthenticatedWithTenant::class,
-            'admin'           => EnsureUserIsSuperAdmin::class,
+            'guest.tenant' => RedirectIfAuthenticatedWithTenant::class,
+            'admin' => EnsureUserIsSuperAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

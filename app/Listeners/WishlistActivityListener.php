@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\WishlistActivity;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class WishlistActivityListener
 {

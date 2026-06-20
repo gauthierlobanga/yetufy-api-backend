@@ -530,27 +530,28 @@ class VendorRegistrationService
         return rtrim($scheme.'://'.$host.$portSuffix, '/');
     }
 
-       /**
+    /**
      * Créer le symlink pour le storage du tenant.
      */
     private function createTenantStorageSymlink(Tenant $tenant): void
     {
         $tenantSlug = $tenant->slug;
-        $tenantId   = $tenant->id;
+        $tenantId = $tenant->id;
 
         // Dossier cible : storage/tenantXXXX/app/public
-        $targetDir = storage_path('tenant' . $tenantId . '/app/public');
+        $targetDir = storage_path('tenant'.$tenantId.'/app/public');
 
         // S'assurer que le dossier cible existe
         if (! is_dir($targetDir)) {
             if (! mkdir($targetDir, 0755, true)) {
                 Log::error("Impossible de créer le dossier de stockage du tenant : {$targetDir}");
+
                 return;
             }
         }
 
         // Chemin du lien public
-        $publicLinkPath = public_path('storage/tenant-' . $tenantSlug);
+        $publicLinkPath = public_path('storage/tenant-'.$tenantSlug);
 
         // S'assurer que le dossier public/storage existe
         $publicStorageDir = public_path('storage');
@@ -571,7 +572,7 @@ class VendorRegistrationService
         // Déterminer la cible relative selon l'OS
         if (PHP_OS_FAMILY === 'Windows') {
             // Windows natif (hors Docker) : utiliser mklink /J avec chemin relatif
-            $relativeTarget = str_replace('/', '\\', '../../storage/tenant' . $tenantId . '/app/public');
+            $relativeTarget = str_replace('/', '\\', '../../storage/tenant'.$tenantId.'/app/public');
             $command = sprintf('mklink /J "%s" "%s"', $publicLinkPath, $relativeTarget);
             exec($command, $output, $returnCode);
             if ($returnCode !== 0) {
@@ -579,7 +580,7 @@ class VendorRegistrationService
             }
         } else {
             // Linux / macOS / WSL / Docker : lien symbolique relatif
-            $relativeTarget = '../../storage/tenant' . $tenantId . '/app/public';
+            $relativeTarget = '../../storage/tenant'.$tenantId.'/app/public';
             if (! symlink($relativeTarget, $publicLinkPath)) {
                 Log::error("Échec de création du lien symbolique pour le tenant {$tenantSlug}");
             }

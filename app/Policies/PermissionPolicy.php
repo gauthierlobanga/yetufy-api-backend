@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Permission;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class PermissionPolicy
 {
     use HandlesAuthorization;
 
-       /**
+    /**
      * Perform pre-authorization checks.
      */
     public function before(AuthUser $user, string $ability): ?bool
@@ -83,5 +83,4 @@ class PermissionPolicy
     {
         return $authUser->can('Reorder Permission');
     }
-
 }

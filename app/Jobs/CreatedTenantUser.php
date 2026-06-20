@@ -3,12 +3,10 @@
 namespace App\Jobs;
 
 use App\Models\Tenant;
-use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class CreatedTenantUser implements ShouldQueue
 {

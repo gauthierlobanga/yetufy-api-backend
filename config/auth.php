@@ -44,12 +44,12 @@ return [
         ],
 
         'api' => [
-            'driver'   => 'sanctum',
+            'driver' => 'sanctum',
             'provider' => 'users',
         ],
 
         'tenant' => [
-            'driver'   => 'sanctum',
+            'driver' => 'sanctum',
             'provider' => 'users',
         ],
     ],

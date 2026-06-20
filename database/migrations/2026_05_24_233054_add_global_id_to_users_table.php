@@ -15,19 +15,21 @@ return new class extends Migration
         //     $table->uuid('global_id')->nullable()->unique()->after('id');
         // });
 
-        // Schema::create('user_tenant', function (Blueprint $table) {
-        //     $table->uuid('id')->primary();
+        if (! Schema::hasTable('user_tenant')) {
+            Schema::create('user_tenant', function (Blueprint $table) {
+                $table->uuid('id')->primary();
 
-        //     $table->uuid('tenant_id');
-        //     $table->uuid('user_id');
+                $table->uuid('tenant_id');
+                $table->uuid('user_id');
 
-        //     $table->boolean('is_owner')->default(false);
+                $table->boolean('is_owner')->default(false);
 
-        //     $table->timestamps();
+                $table->timestamps();
 
-        //     $table->foreign('tenant_id')->references('id')->on('tenants')->cascadeOnDelete();
-        //     $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-        // });
+                $table->foreign('tenant_id')->references('id')->on('tenants')->cascadeOnDelete();
+                $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            });
+        }
 
     }
 
@@ -36,8 +38,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::table('user_tenant', function (Blueprint $table) {
-        //     //
-        // });
+        Schema::table('user_tenant', function (Blueprint $table) {
+            //
+        });
     }
 };

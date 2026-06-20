@@ -7,7 +7,6 @@ use App\Models\Commande;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 
-
 class OrderController extends Controller
 {
     public function ordersIndex()

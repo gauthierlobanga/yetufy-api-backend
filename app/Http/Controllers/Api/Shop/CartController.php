@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
-
 class CartController extends Controller
 {
     public function cartIndex(Request $request)

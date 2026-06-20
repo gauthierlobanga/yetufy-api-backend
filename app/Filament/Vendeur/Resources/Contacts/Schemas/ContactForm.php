@@ -3,8 +3,6 @@
 namespace App\Filament\Vendeur\Resources\Contacts\Schemas;
 
 use App\Models\Contact;
-use App\Models\Tenant;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\MarkdownEditor;
@@ -16,7 +14,6 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Illuminate\Support\Facades\Auth;
 
 class ContactForm
 {

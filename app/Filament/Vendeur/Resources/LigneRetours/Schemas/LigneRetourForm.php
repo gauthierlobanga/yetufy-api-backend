@@ -2,13 +2,10 @@
 
 namespace App\Filament\Vendeur\Resources\LigneRetours\Schemas;
 
-use App\Models\Tenant;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Facades\Auth;
 
 class LigneRetourForm
 {

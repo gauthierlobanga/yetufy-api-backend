@@ -14,9 +14,10 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-
     private TenantPropsService $tenantPropsService;
+
     private Tenant $tennt;
+
     public function __construct(TenantPropsService $tenantPropsService, Tenant $tennt)
     {
         $this->tenantPropsService = $tenantPropsService;
@@ -26,7 +27,7 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $request->validate([
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
@@ -41,9 +42,9 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'user'         => $user->load('tenants'),
+            'user' => $user->load('tenants'),
             'access_token' => $token,
-            'token_type'   => 'Bearer',
+            'token_type' => 'Bearer',
         ]);
     }
 
@@ -53,9 +54,9 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'user'         => $user,
+            'user' => $user,
             'access_token' => $token,
-            'token_type'   => 'Bearer',
+            'token_type' => 'Bearer',
         ], 201);
     }
 

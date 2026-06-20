@@ -27,4 +27,3 @@ class TenantDatabaseNotificationsSent implements ShouldBroadcastNow
         return 'database-notifications.sent';
     }
 }
-

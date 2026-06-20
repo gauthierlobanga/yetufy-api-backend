@@ -102,7 +102,6 @@ class BlogController extends Controller
         ]);
     }
 
-
     public function blogShow(Post $post, Request $request)
     {
         $user = Auth::user();

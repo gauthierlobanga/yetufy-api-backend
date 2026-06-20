@@ -3,8 +3,6 @@
 namespace App\Filament\Vendeur\Resources\AbandonPaniers\Schemas;
 
 use App\Models\Panier;
-use App\Models\Tenant;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
@@ -14,7 +12,6 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Facades\Auth;
 
 class AbandonPanierForm
 {

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Coupon;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class CouponPolicy
 {
     use HandlesAuthorization;
 
-       /**
+    /**
      * Perform pre-authorization checks.
      */
     public function before(AuthUser $user, string $ability): ?bool
@@ -83,5 +83,4 @@ class CouponPolicy
     {
         return $authUser->can('Reorder Coupon');
     }
-
 }

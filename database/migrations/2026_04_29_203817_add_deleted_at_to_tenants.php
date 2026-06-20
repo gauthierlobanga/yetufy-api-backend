@@ -9,13 +9,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tenants', function (Blueprint $table) {
-           $table->softDeletes();
+            $table->softDeletes();
         });
     }
 
     public function down(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-        });
+        Schema::table('tenants', function (Blueprint $table) {});
     }
 };

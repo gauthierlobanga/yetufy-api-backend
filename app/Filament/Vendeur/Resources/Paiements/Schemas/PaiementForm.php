@@ -2,13 +2,10 @@
 
 namespace App\Filament\Vendeur\Resources\Paiements\Schemas;
 
-use App\Models\Tenant;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Facades\Auth;
 
 class PaiementForm
 {

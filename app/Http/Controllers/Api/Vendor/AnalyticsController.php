@@ -8,7 +8,6 @@ use App\Services\Analytics\AnalyticsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class AnalyticsController extends Controller
 {
     protected AnalyticsService $analytics;

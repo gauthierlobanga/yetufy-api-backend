@@ -40,61 +40,61 @@ class DashboardController extends Controller
         $paginatedPosts = $query->paginate($request->per_page ?? 10);
 
         $posts = [
-            'data'         => PostResource::collection($paginatedPosts->items())->toArray($request),
+            'data' => PostResource::collection($paginatedPosts->items())->toArray($request),
             'current_page' => $paginatedPosts->currentPage(),
-            'last_page'    => $paginatedPosts->lastPage(),
-            'from'         => $paginatedPosts->firstItem(),
-            'to'           => $paginatedPosts->lastItem(),
-            'total'        => $paginatedPosts->total(),
-            'per_page'     => $paginatedPosts->perPage(),
+            'last_page' => $paginatedPosts->lastPage(),
+            'from' => $paginatedPosts->firstItem(),
+            'to' => $paginatedPosts->lastItem(),
+            'total' => $paginatedPosts->total(),
+            'per_page' => $paginatedPosts->perPage(),
         ];
 
         // --- Appel des méthodes de calcul (identiques à l'original) ---
-        $stats             = $this->computeStats($request, $isSuperAdmin, $user);
-        $chartStats        = $this->computeChartStats($request, $isSuperAdmin, $user, $driver);
-        $categoriesStats   = $this->computeCategoriesStats($request, $isSuperAdmin, $user);
-        $postsStatusStats  = $this->computePostsStatusStats($request, $isSuperAdmin, $user);
-        $topPosts          = $this->computeTopPosts($request, $isSuperAdmin, $user);
-        $topAuthors        = $isSuperAdmin ? $this->computeTopAuthors($request, $user) : [];
-        $engagementStats   = $this->computeEngagementStats($request, $isSuperAdmin, $user);
-        $scheduledPosts    = $this->computeScheduledPosts($request, $isSuperAdmin, $user);
-        $weeklyActivity    = $this->computeWeeklyActivity($request, $isSuperAdmin, $user, $driver);
+        $stats = $this->computeStats($request, $isSuperAdmin, $user);
+        $chartStats = $this->computeChartStats($request, $isSuperAdmin, $user, $driver);
+        $categoriesStats = $this->computeCategoriesStats($request, $isSuperAdmin, $user);
+        $postsStatusStats = $this->computePostsStatusStats($request, $isSuperAdmin, $user);
+        $topPosts = $this->computeTopPosts($request, $isSuperAdmin, $user);
+        $topAuthors = $isSuperAdmin ? $this->computeTopAuthors($request, $user) : [];
+        $engagementStats = $this->computeEngagementStats($request, $isSuperAdmin, $user);
+        $scheduledPosts = $this->computeScheduledPosts($request, $isSuperAdmin, $user);
+        $weeklyActivity = $this->computeWeeklyActivity($request, $isSuperAdmin, $user, $driver);
         $monthlyPostsStats = $this->computeMonthlyStats($request, $isSuperAdmin, $user, $driver);
-        $hourlyPostsStats  = $this->computeHourlyStats($request, $isSuperAdmin, $user, $driver);
+        $hourlyPostsStats = $this->computeHourlyStats($request, $isSuperAdmin, $user, $driver);
         $categoryPerformance = $this->computeCategoryPerformance($request, $isSuperAdmin, $user);
-        $topTags           = $isSuperAdmin ? $this->computeTopTags($request, $user) : [];
+        $topTags = $isSuperAdmin ? $this->computeTopTags($request, $user) : [];
 
         $authors = $isSuperAdmin ? User::has('posts')->get(['id', 'name', 'email']) : [];
         $categoriesList = PostCategory::orderBy('nom')->get(['id', 'nom', 'slug']);
 
         return response()->json([
-            'posts'                => $posts,
-            'stats'                => $stats,
-            'chartStats'           => $chartStats,
-            'categoriesStats'      => $categoriesStats,
-            'postsStatusStats'     => $postsStatusStats,
-            'topPosts'             => $topPosts,
-            'topAuthors'           => $topAuthors,
-            'engagementStats'      => $engagementStats,
-            'scheduledPosts'       => $scheduledPosts,
-            'weeklyActivity'       => $weeklyActivity,
-            'monthlyPostsStats'    => $monthlyPostsStats,
-            'hourlyPostsStats'     => $hourlyPostsStats,
-            'categoryPerformance'  => $categoryPerformance,
-            'topTags'              => $topTags,
-            'is_super_admin'       => $isSuperAdmin,
-            'authors'              => $authors,
-            'categories_list'      => $categoriesList,
+            'posts' => $posts,
+            'stats' => $stats,
+            'chartStats' => $chartStats,
+            'categoriesStats' => $categoriesStats,
+            'postsStatusStats' => $postsStatusStats,
+            'topPosts' => $topPosts,
+            'topAuthors' => $topAuthors,
+            'engagementStats' => $engagementStats,
+            'scheduledPosts' => $scheduledPosts,
+            'weeklyActivity' => $weeklyActivity,
+            'monthlyPostsStats' => $monthlyPostsStats,
+            'hourlyPostsStats' => $hourlyPostsStats,
+            'categoryPerformance' => $categoryPerformance,
+            'topTags' => $topTags,
+            'is_super_admin' => $isSuperAdmin,
+            'authors' => $authors,
+            'categories_list' => $categoriesList,
             'filters' => [
-                'search'      => $request->search,
-                'status'      => $request->status,
+                'search' => $request->search,
+                'status' => $request->status,
                 'category_id' => $request->category_id,
-                'author_id'   => $request->author_id,
-                'period'      => $request->period,
-                'start_date'  => $request->start_date,
-                'end_date'    => $request->end_date,
-                'year'        => $request->year,
-                'month'       => $request->month,
+                'author_id' => $request->author_id,
+                'period' => $request->period,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'year' => $request->year,
+                'month' => $request->month,
             ],
         ]);
     }
@@ -129,15 +129,15 @@ class DashboardController extends Controller
         }
 
         $newPost = $post->replicate();
-        $newPost->title = $post->title . ' (Copie)';
-        $newPost->slug = Str::slug($newPost->title) . '-' . Str::random(5);
+        $newPost->title = $post->title.' (Copie)';
+        $newPost->slug = Str::slug($newPost->title).'-'.Str::random(5);
         $newPost->status = 'draft';
         $newPost->published_at = null;
         $newPost->save();
 
         return response()->json([
             'message' => 'Article dupliqué avec succès.',
-            'post'    => new PostResource($newPost),
+            'post' => new PostResource($newPost),
         ], 201);
     }
 
@@ -147,7 +147,7 @@ class DashboardController extends Controller
     public function postsReorder(Request $request): JsonResponse
     {
         $request->validate([
-            'ordered_ids'   => 'required|array',
+            'ordered_ids' => 'required|array',
             'ordered_ids.*' => 'exists:posts,id',
         ]);
 
@@ -163,13 +163,13 @@ class DashboardController extends Controller
     private function applyFilters($query, Request $request, bool $isSuperAdmin, $user): void
     {
         if ($request->search) {
-            $query->where('title', 'like', '%' . $request->search . '%');
+            $query->where('title', 'like', '%'.$request->search.'%');
         }
         if ($request->status && $request->status !== 'all') {
             $query->where('status', $request->status);
         }
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
@@ -197,18 +197,18 @@ class DashboardController extends Controller
             $query->where('posts.status', $request->status);
         }
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
         }
 
         return $query->get()
-            ->map(fn($item) => [
-                'status'       => $item->status,
+            ->map(fn ($item) => [
+                'status' => $item->status,
                 'status_label' => $item->status_label,
-                'count'        => (int) $item->count,
-                'fill'         => match ($item->status) {
+                'count' => (int) $item->count,
+                'fill' => match ($item->status) {
                     'published' => 'var(--chart-1)',
                     'draft' => 'var(--chart-2)',
                     'scheduled' => 'var(--chart-3)',
@@ -232,35 +232,35 @@ class DashboardController extends Controller
                 $q->where('posts.status', $request->status);
             }
             if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
+                $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
             }
             if ($isSuperAdmin && $request->author_id) {
                 $q->where('user_id', $request->author_id);
             }
         })
-        ->withCount(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
-            if (! $isSuperAdmin) {
-                $q->where('user_id', $user->id);
-            }
-            $q = $this->applyDateFilters($q, $request, 'posts');
-            if ($request->status && $request->status !== 'all') {
-                $q->where('posts.status', $request->status);
-            }
-            if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
-            }
-            if ($isSuperAdmin && $request->author_id) {
-                $q->where('user_id', $request->author_id);
-            }
-        }])
-        ->orderBy('posts_count', 'desc');
+            ->withCount(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
+                if (! $isSuperAdmin) {
+                    $q->where('user_id', $user->id);
+                }
+                $q = $this->applyDateFilters($q, $request, 'posts');
+                if ($request->status && $request->status !== 'all') {
+                    $q->where('posts.status', $request->status);
+                }
+                if ($request->category_id) {
+                    $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
+                }
+                if ($isSuperAdmin && $request->author_id) {
+                    $q->where('user_id', $request->author_id);
+                }
+            }])
+            ->orderBy('posts_count', 'desc');
 
         return $query->get()
-            ->map(fn($category) => [
-                'id'          => $category->id,
-                'nom'         => $category->nom,
-                'slug'        => $category->slug,
-                'color'       => $category->color,
+            ->map(fn ($category) => [
+                'id' => $category->id,
+                'nom' => $category->nom,
+                'slug' => $category->slug,
+                'color' => $category->color,
                 'posts_count' => $category->posts_count,
             ])
             ->toArray();
@@ -280,24 +280,24 @@ class DashboardController extends Controller
         $query = $this->applyDateFilters($query, $request, 'posts');
 
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
         }
 
         return $query->get()
-            ->map(fn($post) => [
-                'id'          => $post->id,
-                'title'       => $post->title,
-                'slug'        => $post->slug,
+            ->map(fn ($post) => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'slug' => $post->slug,
                 'views_count' => $post->views_count,
                 'likes_count' => $post->likes_count,
                 'comments_count' => $post->comments_count,
                 'user' => [
-                    'id'         => $post->user->id,
-                    'name'       => $post->user->name,
-                    'email'      => $post->user->email,
+                    'id' => $post->user->id,
+                    'name' => $post->user->name,
+                    'email' => $post->user->email,
                     'avatar_url' => $post->user->avatar_url,
                 ],
                 'published_at' => $post->published_at?->format('Y-m-d'),
@@ -314,35 +314,35 @@ class DashboardController extends Controller
                 $q->where('posts.status', $request->status);
             }
             if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
+                $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
             }
         })
-        ->withCount(['posts' => function ($q) use ($request) {
-            $q = $this->applyDateFilters($q, $request, 'posts');
-            if ($request->status && $request->status !== 'all') {
-                $q->where('posts.status', $request->status);
-            }
-            if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
-            }
-        }])
-        ->withSum(['posts' => function ($q) use ($request) {
-            $q = $this->applyDateFilters($q, $request, 'posts');
-            if ($request->status && $request->status !== 'all') {
-                $q->where('posts.status', $request->status);
-            }
-            if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
-            }
-        }], 'views_count')
-        ->orderBy('posts_count', 'desc')
-        ->limit(10);
+            ->withCount(['posts' => function ($q) use ($request) {
+                $q = $this->applyDateFilters($q, $request, 'posts');
+                if ($request->status && $request->status !== 'all') {
+                    $q->where('posts.status', $request->status);
+                }
+                if ($request->category_id) {
+                    $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
+                }
+            }])
+            ->withSum(['posts' => function ($q) use ($request) {
+                $q = $this->applyDateFilters($q, $request, 'posts');
+                if ($request->status && $request->status !== 'all') {
+                    $q->where('posts.status', $request->status);
+                }
+                if ($request->category_id) {
+                    $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
+                }
+            }], 'views_count')
+            ->orderBy('posts_count', 'desc')
+            ->limit(10);
 
         return $query->get()
-            ->map(fn($user) => [
-                'id'          => $user->id,
-                'name'        => $user->name,
-                'avatar_url'  => $user->avatar_url,
+            ->map(fn ($user) => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'avatar_url' => $user->avatar_url,
                 'posts_count' => $user->posts_count,
                 'total_views' => $user->posts_sum_views_count ?? 0,
             ])
@@ -362,7 +362,7 @@ class DashboardController extends Controller
         $query = $this->applyDateFilters($query, $request, 'posts');
 
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
@@ -385,17 +385,17 @@ class DashboardController extends Controller
         $query = $this->applyDateFilters($query, $request, 'posts');
 
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
         }
 
         return $query->get()
-            ->map(fn($post) => [
-                'id'            => $post->id,
-                'title'         => $post->title,
-                'slug'          => $post->slug,
+            ->map(fn ($post) => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'slug' => $post->slug,
                 'scheduled_for' => $post->scheduled_for,
             ])
             ->toArray();
@@ -415,15 +415,15 @@ class DashboardController extends Controller
         $query = $this->applyDateFilters($query, $request, 'posts');
 
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
         }
 
         return $query->get()
-            ->map(fn($item) => [
-                'day'   => $this->translateDayNumber((int) $item->day_num, $driver),
+            ->map(fn ($item) => [
+                'day' => $this->translateDayNumber((int) $item->day_num, $driver),
                 'count' => (int) $item->count,
             ])
             ->toArray();
@@ -443,17 +443,17 @@ class DashboardController extends Controller
         $query = $this->applyDateFilters($query, $request, 'posts');
 
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
         }
 
         return $query->get()
-            ->map(fn($item) => [
-                'month'      => (int) $item->month,
+            ->map(fn ($item) => [
+                'month' => (int) $item->month,
                 'month_name' => $this->getMonthName((int) $item->month),
-                'count'      => (int) $item->count,
+                'count' => (int) $item->count,
             ])
             ->toArray();
     }
@@ -472,15 +472,15 @@ class DashboardController extends Controller
         $query = $this->applyDateFilters($query, $request, 'posts');
 
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
         }
 
         return $query->get()
-            ->map(fn($item) => [
-                'hour'  => (int) $item->hour,
+            ->map(fn ($item) => [
+                'hour' => (int) $item->hour,
                 'count' => (int) $item->count,
             ])
             ->toArray();
@@ -498,83 +498,83 @@ class DashboardController extends Controller
                 $q->where('posts.status', $request->status);
             }
             if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
+                $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
             }
             if ($isSuperAdmin && $request->author_id) {
                 $q->where('user_id', $request->author_id);
             }
         })
-        ->withCount(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
-            if (! $isSuperAdmin) {
-                $q->where('user_id', $user->id);
-            }
-            $q = $this->applyDateFilters($q, $request, 'posts');
-            if ($request->status && $request->status !== 'all') {
-                $q->where('posts.status', $request->status);
-            }
-            if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
-            }
-            if ($isSuperAdmin && $request->author_id) {
-                $q->where('user_id', $request->author_id);
-            }
-        }])
-        ->withSum(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
-            if (! $isSuperAdmin) {
-                $q->where('user_id', $user->id);
-            }
-            $q = $this->applyDateFilters($q, $request, 'posts');
-            if ($request->status && $request->status !== 'all') {
-                $q->where('posts.status', $request->status);
-            }
-            if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
-            }
-            if ($isSuperAdmin && $request->author_id) {
-                $q->where('user_id', $request->author_id);
-            }
-        }], 'views_count')
-        ->withSum(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
-            if (! $isSuperAdmin) {
-                $q->where('user_id', $user->id);
-            }
-            $q = $this->applyDateFilters($q, $request, 'posts');
-            if ($request->status && $request->status !== 'all') {
-                $q->where('posts.status', $request->status);
-            }
-            if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
-            }
-            if ($isSuperAdmin && $request->author_id) {
-                $q->where('user_id', $request->author_id);
-            }
-        }], 'likes_count')
-        ->withSum(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
-            if (! $isSuperAdmin) {
-                $q->where('user_id', $user->id);
-            }
-            $q = $this->applyDateFilters($q, $request, 'posts');
-            if ($request->status && $request->status !== 'all') {
-                $q->where('posts.status', $request->status);
-            }
-            if ($request->category_id) {
-                $q->whereHas('categories', fn($c) => $c->where('posts_categories.id', $request->category_id));
-            }
-            if ($isSuperAdmin && $request->author_id) {
-                $q->where('user_id', $request->author_id);
-            }
-        }], 'comments_count')
-        ->orderBy('posts_count', 'desc')
-        ->limit(10);
+            ->withCount(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
+                if (! $isSuperAdmin) {
+                    $q->where('user_id', $user->id);
+                }
+                $q = $this->applyDateFilters($q, $request, 'posts');
+                if ($request->status && $request->status !== 'all') {
+                    $q->where('posts.status', $request->status);
+                }
+                if ($request->category_id) {
+                    $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
+                }
+                if ($isSuperAdmin && $request->author_id) {
+                    $q->where('user_id', $request->author_id);
+                }
+            }])
+            ->withSum(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
+                if (! $isSuperAdmin) {
+                    $q->where('user_id', $user->id);
+                }
+                $q = $this->applyDateFilters($q, $request, 'posts');
+                if ($request->status && $request->status !== 'all') {
+                    $q->where('posts.status', $request->status);
+                }
+                if ($request->category_id) {
+                    $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
+                }
+                if ($isSuperAdmin && $request->author_id) {
+                    $q->where('user_id', $request->author_id);
+                }
+            }], 'views_count')
+            ->withSum(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
+                if (! $isSuperAdmin) {
+                    $q->where('user_id', $user->id);
+                }
+                $q = $this->applyDateFilters($q, $request, 'posts');
+                if ($request->status && $request->status !== 'all') {
+                    $q->where('posts.status', $request->status);
+                }
+                if ($request->category_id) {
+                    $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
+                }
+                if ($isSuperAdmin && $request->author_id) {
+                    $q->where('user_id', $request->author_id);
+                }
+            }], 'likes_count')
+            ->withSum(['posts' => function ($q) use ($request, $isSuperAdmin, $user) {
+                if (! $isSuperAdmin) {
+                    $q->where('user_id', $user->id);
+                }
+                $q = $this->applyDateFilters($q, $request, 'posts');
+                if ($request->status && $request->status !== 'all') {
+                    $q->where('posts.status', $request->status);
+                }
+                if ($request->category_id) {
+                    $q->whereHas('categories', fn ($c) => $c->where('posts_categories.id', $request->category_id));
+                }
+                if ($isSuperAdmin && $request->author_id) {
+                    $q->where('user_id', $request->author_id);
+                }
+            }], 'comments_count')
+            ->orderBy('posts_count', 'desc')
+            ->limit(10);
 
         return $query->get()
-            ->map(fn($category) => [
-                'id'             => $category->id,
-                'nom'            => $category->nom,
-                'slug'           => $category->slug,
-                'posts_count'    => $category->posts_count,
-                'total_views'    => $category->posts_sum_views_count ?? 0,
-                'total_likes'    => $category->posts_sum_likes_count ?? 0,
+            ->map(fn ($category) => [
+                'id' => $category->id,
+                'nom' => $category->nom,
+                'slug' => $category->slug,
+                'posts_count' => $category->posts_count,
+                'total_views' => $category->posts_sum_views_count ?? 0,
+                'total_likes' => $category->posts_sum_likes_count ?? 0,
                 'total_comments' => $category->posts_sum_comments_count ?? 0,
             ])
             ->toArray();
@@ -590,7 +590,7 @@ class DashboardController extends Controller
             $postsQuery->where('posts.status', $request->status);
         }
         if ($request->category_id) {
-            $postsQuery->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $postsQuery->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($request->author_id) {
             $postsQuery->where('user_id', $request->author_id);
@@ -618,10 +618,10 @@ class DashboardController extends Controller
 
         $tags = DB::table('tags')->whereIn('id', $tagIds)->get()->keyBy('id');
 
-        return $tagCounts->map(fn($item) => [
-            'id'          => $item->tag_id,
-            'name'        => $this->extractTagName($tags[$item->tag_id]->name ?? ''),
-            'slug'        => $tags[$item->tag_id]->slug ?? '',
+        return $tagCounts->map(fn ($item) => [
+            'id' => $item->tag_id,
+            'name' => $this->extractTagName($tags[$item->tag_id]->name ?? ''),
+            'slug' => $tags[$item->tag_id]->slug ?? '',
             'posts_count' => (int) $item->total,
         ])->values()->toArray();
     }
@@ -649,17 +649,17 @@ class DashboardController extends Controller
             $query->where('posts.status', $request->status);
         }
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
         }
 
         return $query->get()
-            ->map(fn($item) => [
-                'date'     => $item->date,
-                'views'    => (int) $item->views,
-                'likes'    => (int) $item->likes,
+            ->map(fn ($item) => [
+                'date' => $item->date,
+                'views' => (int) $item->views,
+                'likes' => (int) $item->likes,
                 'comments' => (int) $item->comments,
             ])
             ->toArray();
@@ -679,7 +679,7 @@ class DashboardController extends Controller
             $query->where('posts.status', $request->status);
         }
         if ($request->category_id) {
-            $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $query->where('user_id', $request->author_id);
@@ -687,9 +687,9 @@ class DashboardController extends Controller
 
         $currentPeriodQuery = clone $query;
         $currentStats = [
-            'total_posts'    => $currentPeriodQuery->count(),
-            'total_views'    => $currentPeriodQuery->sum('posts.views_count'),
-            'total_likes'    => $currentPeriodQuery->sum('posts.likes_count'),
+            'total_posts' => $currentPeriodQuery->count(),
+            'total_views' => $currentPeriodQuery->sum('posts.views_count'),
+            'total_likes' => $currentPeriodQuery->sum('posts.likes_count'),
             'total_comments' => $currentPeriodQuery->sum('posts.comments_count'),
         ];
 
@@ -702,7 +702,7 @@ class DashboardController extends Controller
             $previousPeriodQuery->where('posts.status', $request->status);
         }
         if ($request->category_id) {
-            $previousPeriodQuery->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+            $previousPeriodQuery->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
         }
         if ($isSuperAdmin && $request->author_id) {
             $previousPeriodQuery->where('user_id', $request->author_id);
@@ -827,9 +827,9 @@ class DashboardController extends Controller
         }
 
         $previousStats = [
-            'total_posts'    => $previousPeriodQuery->count(),
-            'total_views'    => $previousPeriodQuery->sum('posts.views_count'),
-            'total_likes'    => $previousPeriodQuery->sum('posts.likes_count'),
+            'total_posts' => $previousPeriodQuery->count(),
+            'total_views' => $previousPeriodQuery->sum('posts.views_count'),
+            'total_likes' => $previousPeriodQuery->sum('posts.likes_count'),
             'total_comments' => $previousPeriodQuery->sum('posts.comments_count'),
         ];
 
@@ -838,10 +838,10 @@ class DashboardController extends Controller
         $postsChange = $this->calculatePercentageChange($currentStats['total_posts'], $previousStats['total_posts']);
 
         $currentMonthStart = now()->startOfMonth();
-        $currentMonthEnd   = now()->endOfMonth();
+        $currentMonthEnd = now()->endOfMonth();
         $postsThisMonth = (clone $query)->whereBetween('posts.created_at', [$currentMonthStart, $currentMonthEnd])->count();
         $previousMonthStart = now()->subMonth()->startOfMonth();
-        $previousMonthEnd   = now()->subMonth()->endOfMonth();
+        $previousMonthEnd = now()->subMonth()->endOfMonth();
         $postsPreviousMonth = (clone $previousPeriodQuery)->whereBetween('posts.created_at', [$previousMonthStart, $previousMonthEnd])->count();
         $postsThisMonthChange = $this->calculatePercentageChange($postsThisMonth, $postsPreviousMonth);
 
@@ -859,7 +859,7 @@ class DashboardController extends Controller
                 $query->where('posts.status', $request->status);
             }
             if ($request->category_id) {
-                $query->whereHas('categories', fn($q) => $q->where('posts_categories.id', $request->category_id));
+                $query->whereHas('categories', fn ($q) => $q->where('posts_categories.id', $request->category_id));
             }
         })->count();
 
@@ -877,28 +877,28 @@ class DashboardController extends Controller
         // Anciens brouillons
         $oldDraftsCount = Post::where('posts.status', 'draft')
             ->where('posts.updated_at', '<=', now()->subDays(30))
-            ->when(!$isSuperAdmin, fn($q) => $q->where('user_id', $user->id))
+            ->when(! $isSuperAdmin, fn ($q) => $q->where('user_id', $user->id))
             ->count();
 
         // Jours depuis dernière publication
         $lastPublishedPost = Post::where('status', 'published')
-            ->when(!$isSuperAdmin, fn($q) => $q->where('user_id', $user->id))
+            ->when(! $isSuperAdmin, fn ($q) => $q->where('user_id', $user->id))
             ->latest('published_at')
             ->first();
         $daysSinceLastPost = null;
         if ($lastPublishedPost) {
             $publishedDate = Carbon::parse($lastPublishedPost->published_at)->startOfDay();
-            $currentDate   = now()->startOfDay();
+            $currentDate = now()->startOfDay();
             $daysSinceLastPost = (int) $publishedDate->diffInDays($currentDate);
         }
 
         // Tendance des vues 7 jours
         $viewsLast7Days = Post::where('status', 'published')
-            ->when(!$isSuperAdmin, fn($q) => $q->where('user_id', $user->id))
+            ->when(! $isSuperAdmin, fn ($q) => $q->where('user_id', $user->id))
             ->where('created_at', '>=', now()->subDays(7))
             ->sum('views_count');
         $viewsPrevious7Days = Post::where('status', 'published')
-            ->when(!$isSuperAdmin, fn($q) => $q->where('user_id', $user->id))
+            ->when(! $isSuperAdmin, fn ($q) => $q->where('user_id', $user->id))
             ->whereBetween('created_at', [now()->subDays(14), now()->subDays(7)])
             ->sum('views_count');
         $viewsTrend = $this->calculatePercentageChange($viewsLast7Days, $viewsPrevious7Days);
@@ -906,10 +906,10 @@ class DashboardController extends Controller
         // Brouillons récents
         $pendingDraftsCount = Post::where('posts.status', 'draft')
             ->where('posts.updated_at', '>=', now()->subDays(7))
-            ->when(!$isSuperAdmin, fn($q) => $q->where('user_id', $user->id))
+            ->when(! $isSuperAdmin, fn ($q) => $q->where('user_id', $user->id))
             ->count();
         $previousDraftsCount = Post::where('posts.status', 'draft')
-            ->when(!$isSuperAdmin, fn($q) => $q->where('user_id', $user->id))
+            ->when(! $isSuperAdmin, fn ($q) => $q->where('user_id', $user->id))
             ->whereBetween('posts.updated_at', [now()->subDays(14), now()->subDays(7)])
             ->count();
         $draftsChange = $this->calculatePercentageChange($pendingDraftsCount, $previousDraftsCount);
@@ -921,29 +921,29 @@ class DashboardController extends Controller
         $engagement = $this->computeEngagementStats($request, $isSuperAdmin, $user);
 
         return [
-            'total_posts'             => $currentStats['total_posts'],
-            'published_posts'         => (clone $currentPeriodQuery)->where('posts.status', 'published')->count(),
-            'draft_posts'             => (clone $currentPeriodQuery)->where('posts.status', 'draft')->count(),
-            'scheduled_posts'         => (clone $currentPeriodQuery)->where('posts.status', 'scheduled')->count(),
-            'archived_posts'          => (clone $currentPeriodQuery)->where('posts.status', 'archived')->count(),
-            'total_views'             => $currentStats['total_views'],
-            'total_likes'             => $currentStats['total_likes'],
-            'total_comments'          => $currentStats['total_comments'],
-            'views_change'            => $viewsChange,
-            'likes_change'            => $likesChange,
-            'posts_change'            => $postsChange,
-            'old_drafts_count'        => $oldDraftsCount,
-            'avg_engagement'          => round($engagement->avg_engagement ?? 0, 2),
-            'max_engagement'          => round($engagement->max_engagement ?? 0, 2),
-            'posts_this_month'        => $postsThisMonth,
+            'total_posts' => $currentStats['total_posts'],
+            'published_posts' => (clone $currentPeriodQuery)->where('posts.status', 'published')->count(),
+            'draft_posts' => (clone $currentPeriodQuery)->where('posts.status', 'draft')->count(),
+            'scheduled_posts' => (clone $currentPeriodQuery)->where('posts.status', 'scheduled')->count(),
+            'archived_posts' => (clone $currentPeriodQuery)->where('posts.status', 'archived')->count(),
+            'total_views' => $currentStats['total_views'],
+            'total_likes' => $currentStats['total_likes'],
+            'total_comments' => $currentStats['total_comments'],
+            'views_change' => $viewsChange,
+            'likes_change' => $likesChange,
+            'posts_change' => $postsChange,
+            'old_drafts_count' => $oldDraftsCount,
+            'avg_engagement' => round($engagement->avg_engagement ?? 0, 2),
+            'max_engagement' => round($engagement->max_engagement ?? 0, 2),
+            'posts_this_month' => $postsThisMonth,
             'posts_this_month_change' => $postsThisMonthChange,
-            'active_authors'          => $activeAuthors,
-            'active_authors_change'   => $activeAuthorsChange,
-            'conversion_rate'         => $conversionRate,
-            'days_since_last_post'    => $daysSinceLastPost,
-            'views_trend'             => $viewsTrend,
-            'pending_drafts'          => $pendingDraftsCount,
-            'pending_drafts_change'   => $draftsChange,
+            'active_authors' => $activeAuthors,
+            'active_authors_change' => $activeAuthorsChange,
+            'conversion_rate' => $conversionRate,
+            'days_since_last_post' => $daysSinceLastPost,
+            'views_trend' => $viewsTrend,
+            'pending_drafts' => $pendingDraftsCount,
+            'pending_drafts_change' => $draftsChange,
         ];
     }
 
@@ -1004,13 +1004,14 @@ class DashboardController extends Controller
         if (is_null($tagName)) {
             return 'Sans nom';
         }
-        if (is_string($tagName) && !str_contains($tagName, '{')) {
+        if (is_string($tagName) && ! str_contains($tagName, '{')) {
             return $tagName;
         }
         $decoded = json_decode($tagName, true);
         if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
             return $decoded['fr'] ?? $decoded['en'] ?? reset($decoded) ?? 'Tag';
         }
+
         return trim(preg_replace('/[{}":]/', '', $tagName));
     }
 
@@ -1096,6 +1097,7 @@ class DashboardController extends Controller
         if ($previous == 0) {
             return $current > 0 ? 100 : 0;
         }
+
         return round((($current - $previous) / $previous) * 100, 1);
     }
 

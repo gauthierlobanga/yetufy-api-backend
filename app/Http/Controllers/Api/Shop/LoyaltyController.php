@@ -7,7 +7,6 @@ use App\Models\ProgrammeFidelite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class LoyaltyController extends Controller
 {
     public function loyaltyIndex()

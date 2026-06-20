@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-
 class AcheteurDashboardController extends Controller
 {
     public function adminDashboardIndex(Request $request)
